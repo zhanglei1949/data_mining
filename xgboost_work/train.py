@@ -64,9 +64,10 @@ def main():
 	# use softmax multi-class classification
 	param['objective'] = 'binary:logitraw'
 	# scale weight of positive examples
-	param['eta'] = 0.1
-	param['max_depth'] = 8
-        param['subsample'] = 0.6
+	param['eta'] = 0.05
+        #0.1
+	param['max_depth'] = 5
+        param['subsample'] = 0.8
 	param['silent'] = 1
         param['eval_metric'] = 'auc'
         param['alpha'] = 1
@@ -74,7 +75,7 @@ def main():
 	#param['num_class'] = 2
 
 	watchlist = [(xg_train, 'train'), (xg_vali, 'val')]
-	num_round = 25
+	num_round = 45
 	bst = xgb.train(param, xg_train, num_round, watchlist)
 	# get prediction
 	pred = bst.predict(xg_test)
