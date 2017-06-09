@@ -71,6 +71,7 @@ def train_and_evaluate(trainfilename, testfilename, model_name, timesteps = 10, 
     #with tf.device('/gpu:3'):
     
     model.fit_generator(generator(trainfilename, timesteps, feature_num, batch_size = batch_size),epochs = epochs, steps_per_epoch = steps_per_epoch)
+    model.save(model_name)
     loss = model.evaluate_generator(generator(testfilename, timesteps, feature_num, batch_size = batch_size),steps = steps_per_epoch)
     print loss
     #classes = model.predict(x_test,batch_size =32)
@@ -86,14 +87,14 @@ def train_and_evaluate(trainfilename, testfilename, model_name, timesteps = 10, 
         else:
             res[1]+=1
     print res
-    model.save(model_name)
+    
 
     #print classes[:150]
 def main():
     trainfilename = '../data/generated/data_0_9_standard_scaler.csv'
     testfilename = '../data/generated/data_10_19_standard_scaler.csv'
     train_and_evaluate(trainfilename, testfilename, model_name = 'rnn_train_on_batch.h5',steps_per_epoch = 200, epochs = 10,batch_size = 3000)
-
+    #epochs = 8
 main()
 # Generate dummy data
 #first build the model
